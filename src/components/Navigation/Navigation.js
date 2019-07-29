@@ -1,15 +1,49 @@
 import React from 'react';
-import './navi.css';
+import './navigation.css';
+import { Link } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
+import SignOutButton from '../SignOut/SignOut';
+import { AuthUserContext } from '../Session';
 
+const Navigation = () => (
+    <div>
+        <AuthUserContext.Consumer>
+            {authUser =>
+                authUser ? <NavigationAuth /> : <NavigationNonAuth />
+            }
+        </AuthUserContext.Consumer>
+    </div>
+);
 
+const NavigationAuth = () => (
+    <ul>
+        <li>
+            <Link to={ROUTES.LANDING}>Landing</Link>
+        </li>
+        <li>
+            <Link to={ROUTES.HOME}>Home</Link>
+        </li>
+        <li>
+            <Link to={ROUTES.ACCOUNT}>Account</Link>
+        </li>
+        <li>
+            <Link to={ROUTES.ADMIN}>Admin</Link>
+        </li>
+        <li>
+            <SignOutButton />
+        </li>
+    </ul>
+);
 
-function Nav() {
+const NavigationNonAuth = () => (
+    <ul>
+        <li>
+            <Link to={ROUTES.LANDING}>Landing</Link>
+        </li>
+        <li>
+            <Link to={ROUTES.SIGN_IN}>Sign In</Link>
+        </li>
+    </ul>
+);
 
-    return (
-        <div className='navi'>
-            <h1>Punk Api</h1>
-        </div>
-    );
-}
-
-export default Nav;
+export default Navigation;
